@@ -1,0 +1,13 @@
+# Keep the build context (and with it the final image) free of VCS
+# data, CI config, and local artifacts.
+.git
+.gitignore
+.github
+.loom.toml
+.dockerignore
+Dockerfile
+README.md
+sol-server
+*.out
+*.test
+*.md
