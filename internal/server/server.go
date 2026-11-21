@@ -50,17 +50,19 @@ func (s *Server) Shutdown(ctx context.Context) error {
 //	GET /         service index
 //	GET /healthz  liveness probe
 //	GET /readyz   readiness probe
+//	GET /v1/events  the day's sun events for a place and date
 //	GET /v1/moon  Moon illumination and phase for a UTC date
 func Routes() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", handleIndex)
 	mux.HandleFunc("GET /healthz", handleProbe("ok"))
 	mux.HandleFunc("GET /readyz", handleProbe("ready"))
+	mux.HandleFunc("GET /v1/events", handleEvents)
 	mux.HandleFunc("GET /v1/moon", handleMoon)
 	return mux
 }
 
-var endpoints = []string{"/", "/healthz", "/readyz", "/v1/moon"}
+var endpoints = []string{"/", "/healthz", "/readyz", "/v1/events", "/v1/moon"}
 
 func handleIndex(w http.ResponseWriter, _ *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
